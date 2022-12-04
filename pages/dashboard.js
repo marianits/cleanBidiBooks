@@ -13,10 +13,9 @@ export default function dashboard () {
 
   const getProfile = async () => {
     const response = await axios.get('/api/profile');
-    router.push() 
+    setUser(response.data)
   }
   
-
   const logout = async () => {
     try {
       await axios.post('/api/auth/logout');
