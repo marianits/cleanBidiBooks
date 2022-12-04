@@ -18,5 +18,3 @@ export default function profileHandler (req, res) {
   }
 
 }
-
-//minuto 32
