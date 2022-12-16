@@ -1,20 +1,26 @@
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
+import { dbConnect } from '../../../utils/mongoose';
+import User from '../../../models/User';
 
-export default function loginHandler (req, res) {
+dbConnect();
+
+export default async function loginHandler (req, res) {
 
   const { email, password } = req.body;
 
-  //check if email and password are valid
-  // if email exists
-  //if password is correct
+  const existeUsuario = await User.findOne({ email });
 
-  //use an enviroment variable instead of the secret
-  if (email === 'mariana.arnez99@gmail.com' && password === 'admin') {
+  if (!existeUsuario){
+    return res.status(401).json({ error: 'The provided user doesn\'t exist' });
+  }
+
+  //Future improvement, use bcryptjs to hash passwords.
+  if (password === existeUsuario.password) {
 
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 *24 * 30,
-      email: 'mariana.arnez99@gmail.com',
+      email,
       username: 'marianits'
     }, 'secret')
 
@@ -30,6 +36,6 @@ export default function loginHandler (req, res) {
 
   }
   
-  return res.status(401).json({error: 'Invalid email or password'});
+  return res.status(401).json({error: 'Invalid password'});
 
 };
