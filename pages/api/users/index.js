@@ -26,8 +26,4 @@ export default async function handler(req, res) {
     default:
       return res.status(400).json({ msg: 'this method is not supported '})
   }
-  
 };
-
-//https://www.youtube.com/watch?v=SiUM8vYeuu0&t=1310s&ab_channel=FaztCode
-//40
