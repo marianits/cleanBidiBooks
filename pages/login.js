@@ -33,20 +33,30 @@ export default function LoginPage(){
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input 
-          type="email"
-          placeholder="email"
-          name="email"
-          onChange={handleChange}
-        >
-        </input>
-        <input
-          type="password"
-          placeholder="password"
-          name="password"
-          onChange={handleChange}
-        >
-        </input>
+        <div>
+          <input 
+            type="email"
+            placeholder="email"
+            name="email"
+            onChange={handleChange}
+          >
+          </input>
+        </div>
+        
+        <br/>
+
+        <div>
+          <input
+            type="password"
+            placeholder="password"
+            name="password"
+            onChange={handleChange}
+          >
+          </input>
+        </div>
+        
+        <br/>
+
         <button>Login</button>
       </form>
     </div>
