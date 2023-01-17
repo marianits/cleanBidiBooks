@@ -9,7 +9,8 @@ const categorySchema = new Schema({
   descripcion: {
     type: String,
     trim: true
-  },
+  }
+}, {
   timestamps: true,
   versionKey: false
 })
