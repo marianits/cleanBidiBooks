@@ -4,14 +4,19 @@ import Axios from 'axios'
 import { Button, Form, Grid } from 'semantic-ui-react';
 import { publish } from '../../lib/events';
 
-export default function CatogoryForm({ refetch, category, mode }) {
+export default function CatogoryForm({ refetch, category, mode, id }) {
 
   const mutation = useMutation(newCategory => {
-    return Axios.post('http://localhost:3000/api/categories', newCategory)
+    if(mode !== 'update'){
+      return Axios.post('http://localhost:3000/api/categories', newCategory)
+    }else {
+      return Axios.put(`http://localhost:3000/api/categories/${id}`, newCategory)
+    }
   }, {
   onSuccess: async () => {
     refetch()
   }})
+
 
   const [newCategory, setNewCategory] = useState({
     nombre: category?.nombre || null,
@@ -29,12 +34,6 @@ export default function CatogoryForm({ refetch, category, mode }) {
     try {
       await mutation.mutate(newCategory)
       publish('finish');
-    } catch (error) { }
-  };
-
-  const updateCategory = async () => {
-    try {
-      refetch();
     } catch (error) { }
   };
 
@@ -59,7 +58,7 @@ export default function CatogoryForm({ refetch, category, mode }) {
         </Form.Field>
 
         <Form.TextArea
-          label='Descripcion'
+          label='Descripción:'
           placeholder="Descripcion..."
           name="descripcion"
           defaultValue={category?.descripcion}
