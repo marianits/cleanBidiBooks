@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-export default function dashboard () {
+export default function Dashboard () {
 
   const router = useRouter();
 
