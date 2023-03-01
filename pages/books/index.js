@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query';
-import Axios from 'axios'
+import Axios from 'axios';
+import Link from 'next/link'
 import { Button, Dropdown, Grid, Header, Loader, Table } from 'semantic-ui-react';
 
 export default function Books() {
@@ -37,7 +38,11 @@ export default function Books() {
             return (<Table.Row key={book._id}>
               <Table.Cell>{book._id}</Table.Cell>
               <Table.Cell>{book.nombre}</Table.Cell>
-              <Table.Cell>{book.URL}</Table.Cell>
+              <Table.Cell>
+                <Link href={`/books/${book._id}`}>
+                  enlace
+                </Link>
+              </Table.Cell>
               <Table.Cell width={3}>
                 <Dropdown icon='ellipsis vertical' className='icon' button floating>
                   <Dropdown.Menu>
