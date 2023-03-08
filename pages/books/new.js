@@ -74,8 +74,8 @@ export default function NewBook() {
   };
 
   return (
-    <Grid stackable columns={2}>
-      <Grid.Column width={4} style={{backgroundColor: 'coral'}}>
+    <Grid stackable columns={2} style={{alignItems: 'center', paddingTop: '100px'}}>
+      <Grid.Column width={4}>
         <div style={{
           height: '304px',
           width: '195px',
@@ -102,7 +102,7 @@ export default function NewBook() {
           </div>
         </div>
       </Grid.Column>
-      <Grid.Column width={11} style={{backgroundColor: 'pink', marginLeft: '3rem'}}>
+      <Grid.Column width={11} style={{marginLeft: '4rem'}}>
         <Header
           as='h2'
           content='Detalles del libro'
@@ -162,7 +162,7 @@ export default function NewBook() {
             size='large'
             onClick={upload}
           >
-            Submit
+            Subir
           </Button>
         </Form>
       </Grid.Column>
