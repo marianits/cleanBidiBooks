@@ -17,7 +17,6 @@ export default async function loginHandler (req, res) {
 
   //Future improvement, use bcryptjs to hash passwords.
   if (password === existeUsuario.password) {
-    console.log('holis');
     const token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + 60 * 60 *24 * 30,
       email,
