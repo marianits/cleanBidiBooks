@@ -1,5 +1,15 @@
-export default function Home() {
+import { getSession } from "next-auth/react";
+import { useEffect } from "react";
+
+export default function HomePage() {
+
+  useEffect(() => {
+    (async () => {
+      const session = await getSession();
+    })()
+  }, [])
+
   return (
-   <h1>Bidi Books!</h1>
+    <div>HomePage</div>
   )
 }
