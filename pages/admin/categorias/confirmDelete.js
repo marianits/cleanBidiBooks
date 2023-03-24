@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { Button, Grid } from 'semantic-ui-react';
 import Axios from 'axios';
-import { publish } from '../../lib/events';
+import { publish } from '../../../lib/events';
 
 export default function DeleteConfirmation({ refetch, id }) {
   const mutation = useMutation(id => {

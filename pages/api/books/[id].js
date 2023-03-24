@@ -5,6 +5,7 @@ dbConnect();
 
 export default async function handler(req, res) {
   const { id: _id } = req.query;
+  console.log(_id);
   const book = await Book.findOne({_id});
   res.status(200).json(book);
 };

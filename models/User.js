@@ -1,15 +1,11 @@
 import { Schema, model, models } from 'mongoose';
 
 const userSchema = new Schema({
-  nombre: {
+  username: {
     type: String,
     required: true,
-    trim: true
-  },
-  apellido: {
-    type: String,
-    required: true,
-    trim: true
+    trim: true,
+    unique: true
   },
   email: {
     type: String,

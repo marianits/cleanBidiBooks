@@ -1,25 +1,21 @@
 import { NextResponse } from 'next/server';
-import { jwtVerify } from 'jose';
+import { getToken } from "next-auth/jwt"
 
-export async function middleware(request) {
-
-  const jwt = request.cookies.get('myTokenName')
-
-    if (jwt === undefined) {
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
-    
-    try {
-      await jwtVerify(jwt.value, new TextEncoder().encode('secret'));
-      return NextResponse.next();
-    } catch (error) {
-      console.log(error);
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
+export async function middleware(req) {
+  
+  const token = await getToken({ req })
+  if (token === null) {
+    return NextResponse.redirect(new URL('/api/auth/signin', req.url))
+  }
+  if (token.role !== 'terror') {
+    return NextResponse.redirect(new URL('/error', req.url))
+  }
+  return NextResponse.next();
 }
-
-//Para proteger más de una ruta se usa el matcher
-
-export const config = {
-  matcher: ['/dashboard', '/']
-}
+  
+  //Para proteger más de una ruta se usa el matcher
+  
+  export const config = {
+    matcher: ['/admin/:path*', '/']
+  }
+ 

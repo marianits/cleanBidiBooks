@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import Axios from 'axios'
 import { Button, Dropdown, Grid, Header, Table } from 'semantic-ui-react';
-import { ModalForm } from '../../components/Modal';
+import { ModalForm } from '../../../components/Modal';
 import NewAuthor from './authorForm'
 import ConfirmDelete from '../categorias/confirmDelete';
 
