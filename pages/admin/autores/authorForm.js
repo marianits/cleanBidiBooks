@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useMutation } from 'react-query';
 import Axios from 'axios'
-import { Button, Form, Grid } from 'semantic-ui-react';
-import { publish } from '../../../lib/events';
+import { Button, Form, Grid, Icon, Input } from 'semantic-ui-react';
+import { publish } from '../../lib/events';
 
 export default function AuthorForm({ refetch, author, mode, id }) {
 
@@ -20,7 +20,13 @@ export default function AuthorForm({ refetch, author, mode, id }) {
 
   const [newAuthor, setNewAuthor] = useState({
     nombre: author?.nombre || null,
-    apellidos: author?.apellidos || ''
+    apellidos: author?.apellidos || '',
+    biografia: author?.biografia || '',
+    redesSociales: {
+      facebook: author?.redesSociales?.facebook || 'ccc',
+      twitter: author?.redesSociales?.twitter || 'ccc',
+      instagram: author?.redesSociales?.instagram || ''
+    }
   });
 
   const handleChange = (e) => setNewAuthor({ ...newAuthor, [e.target.name]: e.target.value });
@@ -45,7 +51,7 @@ export default function AuthorForm({ refetch, author, mode, id }) {
     <>
       <Form>
 
-        <Form.Field>
+        <Form.Field required>
           <label htmlFor="cname" >Nombre: </label>
           <input
             type="text"
@@ -57,7 +63,7 @@ export default function AuthorForm({ refetch, author, mode, id }) {
           />
         </Form.Field>
 
-        <Form.Field>
+        <Form.Field required>
           <label htmlFor="cname" >Apellidos: </label>
           <input
             type="text"
@@ -66,6 +72,51 @@ export default function AuthorForm({ refetch, author, mode, id }) {
             placeholder="Ingrese los apellidos..."
             defaultValue={author?.apellidos}
             onChange={handleChange}
+          />
+        </Form.Field>
+
+        <Form.TextArea 
+          label='Acerca de'
+          name="biografia"
+          defaultValue={author?.biografia}
+          onChange={handleChange}
+        />
+
+        <Form.Field inline style={{paddingLeft: '50px'}}>
+          <label>Redes Sociales</label>
+          <Input
+            icon='facebook' 
+            iconPosition='left' 
+            placeholder='enlace...' 
+            name="redesSociales.facebook"
+            defaultValue={author?.redesSociales?.facebook}
+            onChange={handleChange} 
+          />
+          <Input
+            icon='twitter'
+            iconPosition='left'
+            placeholder='enlace...'
+            name="redesSociales.twitter"
+            defaultValue={author?.redesSociales?.twitter}
+            onChange={handleChange} 
+          />
+          <Input
+            icon='instagram'
+            iconPosition='left'
+            placeholder='enlace...'
+            name="redesSociales.instagram"
+            defaultValue={author?.redesSociales?.instagram}
+            onChange={handleChange} 
+          />
+        </Form.Field>
+
+        <Form.Field inline style={{paddingLeft: '200px'}}>
+          <label>Foto de Perfil</label>
+          <Icon disabled name='user outline' size='large'/>
+          <input
+            type="file"
+            id="file"
+            name="file"
           />
         </Form.Field>
 
