@@ -39,7 +39,7 @@ export default function Books() {
               <Table.Cell>{book._id}</Table.Cell>
               <Table.Cell>{book.nombre}</Table.Cell>
               <Table.Cell>
-                <Link href={`/books/${book._id}`}>
+                <Link href={`/admin/books/${book._id}`}>
                   enlace
                 </Link>
               </Table.Cell>

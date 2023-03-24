@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import Axios from 'axios'
 import { Button, Form, Grid } from 'semantic-ui-react';
-import { publish } from '../../lib/events';
+import { publish } from '../../../lib/events';
 
-export default function CatogoryForm({ refetch, category, mode, id }) {
+export default function AuthorForm({ refetch, author, mode, id }) {
 
-  const mutation = useMutation(newCategory => {
+  const mutation = useMutation(newAuthor => {
     if(mode !== 'update'){
-      return Axios.post('http://localhost:3000/api/categories', newCategory)
-    }else {
-      return Axios.put(`http://localhost:3000/api/categories/${id}`, newCategory)
+      return Axios.post('http://localhost:3000/api/authors', newAuthor)
+    } else {
+      return Axios.put(`http://localhost:3000/api/authors/${id}`, newAuthor)
     }
   }, {
   onSuccess: async () => {
@@ -18,21 +18,21 @@ export default function CatogoryForm({ refetch, category, mode, id }) {
   }})
 
 
-  const [newCategory, setNewCategory] = useState({
-    nombre: category?.nombre || null,
-    descripcion: category?.descripcion|| ''
+  const [newAuthor, setNewAuthor] = useState({
+    nombre: author?.nombre || null,
+    apellidos: author?.apellidos || ''
   });
 
-  const handleChange = (e) => setNewCategory({ ...newCategory, [e.target.name]: e.target.value });
+  const handleChange = (e) => setNewAuthor({ ...newAuthor, [e.target.name]: e.target.value });
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    await createCategory();
+    await createAuthor();
   };
 
-  const createCategory = async () => {
+  const createAuthor = async () => {
     try {
-      await mutation.mutate(newCategory)
+      await mutation.mutate(newAuthor)
       publish('finish');
     } catch (error) { }
   };
@@ -52,18 +52,22 @@ export default function CatogoryForm({ refetch, category, mode, id }) {
             id="cname"
             name="nombre"
             placeholder="Ingrese el nombre..."
-            defaultValue={category?.nombre}
+            defaultValue={author?.nombre}
             onChange={handleChange}
           />
         </Form.Field>
 
-        <Form.TextArea
-          label='Descripción:'
-          placeholder="Descripcion..."
-          name="descripcion"
-          defaultValue={category?.descripcion}
-          onChange={handleChange}
-        />
+        <Form.Field>
+          <label htmlFor="cname" >Apellidos: </label>
+          <input
+            type="text"
+            id="cname"
+            name="apellidos"
+            placeholder="Ingrese los apellidos..."
+            defaultValue={author?.apellidos}
+            onChange={handleChange}
+          />
+        </Form.Field>
 
         <Grid style={{ justifyContent: 'flex-end' }}>
           <Grid.Column width={3}>
