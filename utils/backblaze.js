@@ -45,7 +45,7 @@ export const uploadHandler = async (fileData, fileType, fileName) => {
   })
    const bucketName = authData.allowed.bucketName;
    const downloadURL = authData.downloadUrl;
-
+  
  return({
     // add timestamp to url to force re-fetching images with the same src
     url: `${downloadURL}/file/${bucketName}/${data.fileName}?timestamp=${data.uploadTimestamp}`,
