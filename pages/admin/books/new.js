@@ -10,11 +10,11 @@ import {
   TextArea 
 } from 'semantic-ui-react';
 
-const categorias = [
+const categoriass = [
   {
-    key: 'Terror',
-    text: 'Terror',
-    value: 'Terror',
+    key: 'Drama',
+    text: 'Drama',
+    value: 'Drama',
   }, {
     key: 'Acción',
     text: 'Acción',
@@ -48,15 +48,15 @@ const autores = [
 
 export default function NewBook() {
 
+  const [categorias, setCategorias] = useState([]);
   const [file, setFile] = useState();
-  const [nombre, setNombre] = useState('');
+  const [image, setImage] = useState('');
   const [imageFile, setImageFile] = useState('');
-  const [image, setImage] = useState('')
+  const [nombre, setNombre] = useState('');
 
   const handleFileChange = (e) => {
     const { name } = e.target;
     const file = e.target.files[0];
-    console.log(file);
     if (name === 'file') {
       setFile(file);
     } else {
@@ -69,9 +69,14 @@ export default function NewBook() {
     }
   };
 
+  const handleArrayChange = (e, { value }) => {
+    setCategorias(value);
+  };
+
   const upload = async () => {
     const formData = new FormData();
 
+    formData.append('categorias', categorias);
     formData.append('file', file);
     formData.append('imageFile', imageFile);
     formData.append('nombre', nombre);
@@ -84,6 +89,7 @@ export default function NewBook() {
     } catch (err) {
       console.error(err);
     }
+    
   };
 
   return (
@@ -108,9 +114,11 @@ export default function NewBook() {
             />
           ): (
             <CoverUpload handleFileChange={handleFileChange}/>
-          )}    
+          )}   
+
         </div>
       </Grid.Column>
+
       <Grid.Column width={11} style={{marginLeft: '4rem'}}>
         <Header
           as='h2'
@@ -138,7 +146,12 @@ export default function NewBook() {
 
           <Form.Group inline>
             <label>Categorias</label>
-            <Dropdown placeholder='categorías' fluid multiple selection options={categorias} />
+            <Dropdown
+              fluid multiple selection
+              options={categoriass}
+              placeholder='categorías'
+              onChange={handleArrayChange}
+            />
           </Form.Group>
 
           <Form.Group inline>

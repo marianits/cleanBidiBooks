@@ -15,6 +15,10 @@ const bookSchema = new Schema({
     type: String,
     required: false,
     trim: true
+  },
+  categorias: {
+    type: Array,
+    default: []
   }
 }, {
   timestamps: true,

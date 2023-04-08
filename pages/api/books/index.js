@@ -46,18 +46,20 @@ export default async function handler(req, res) {
         // Do something with formData.fields and formData.files
         
         const fileURL = await uploadImage(formData.files.file, formData.fields.nombre);
-        //El imageURL no siempre es necesario, agregar condicion
         const imageURL = formData.files.imageFile ? 
           await uploadImage(formData.files.imageFile, `${formData.fields.nombre}-image`)
           : "" ;
+
         const newBook = new Book({
+          categorias: formData.fields.categorias,
           nombre: formData.fields.nombre,
           fileURL,
           imageURL
         });
-        await newBook.save();
 
+        await newBook.save();
         res.status(201).json();
+
       } catch (error) {
         return res.status(500).json(error)
       }
