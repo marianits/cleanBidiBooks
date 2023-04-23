@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import Axios from 'axios';
-import Link from 'next/link'
+import Link from 'next/link';
 import { Button, Dropdown, Grid, Header, Loader, Table } from 'semantic-ui-react';
 
 export default function Books() {
