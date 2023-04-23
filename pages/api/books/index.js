@@ -45,14 +45,21 @@ export default async function handler(req, res) {
         
         // Do something with formData.fields and formData.files
         
-        const url = await uploadImage(formData.files.file, formData.fields.nombre);
-        const newBook = new Book({
-          nombre: formData.fields.nombre,
-          URL: url
-        });
-        await newBook.save();
+        const fileURL = await uploadImage(formData.files.file, formData.fields.nombre);
+        const imageURL = formData.files.imageFile ? 
+          await uploadImage(formData.files.imageFile, `${formData.fields.nombre}-image`)
+          : "" ;
 
+        const newBook = new Book({
+          categorias: formData.fields.categorias,
+          nombre: formData.fields.nombre,
+          fileURL,
+          imageURL
+        });
+
+        await newBook.save();
         res.status(201).json();
+
       } catch (error) {
         return res.status(500).json(error)
       }

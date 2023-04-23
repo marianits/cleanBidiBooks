@@ -6,11 +6,25 @@ const bookSchema = new Schema({
     required: [true, 'Title is required'],
     trim: true
   },
-  URL: {
+  fileURL: {
     type: String,
-    required: [true, 'URL is required'],
+    required: [true, 'fileURL is required'],
     trim: true
-  } 
+  },
+  descripcion: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  imageURL: {
+    type: String,
+    required: false,
+    trim: true
+  },
+  categorias: {
+    type: Array,
+    default: []
+  }
 }, {
   timestamps: true,
   versionKey: false

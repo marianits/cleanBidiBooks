@@ -1,20 +1,20 @@
 import { useState } from 'react';
+import CoverUpload from 'components/CoverUpload';
 import { 
   Button,
   Divider,
   Dropdown,
   Grid,
   Header,
-  Icon,
   Form,
   TextArea 
 } from 'semantic-ui-react';
 
-const categorias = [
+const categoriass = [
   {
-    key: 'Terror',
-    text: 'Terror',
-    value: 'Terror',
+    key: 'Drama',
+    text: 'Drama',
+    value: 'Drama',
   }, {
     key: 'Acción',
     text: 'Acción',
@@ -39,28 +39,46 @@ const autores = [
     key: 'Haruki Murakami',
     text: 'Haruki Murakami',
     value: 'Haruki Murakami',
+  },{
+    key: 'Laia Aguilar',
+    text: 'Laia Aguilar',
+    value: 'Laia Aguilar',
   }
 ]
 
 export default function NewBook() {
 
+  const [categorias, setCategorias] = useState([]);
   const [file, setFile] = useState();
+  const [image, setImage] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const [nombre, setNombre] = useState('');
-  const [imageURL, setImageURL] = useState(null);
 
   const handleFileChange = (e) => {
+    const { name } = e.target;
     const file = e.target.files[0];
-    if (file) {
+    if (name === 'file') {
       setFile(file);
     } else {
-      setFile(null);
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setImage(reader.result);
+      };
     }
+  };
+
+  const handleArrayChange = (e, { value }) => {
+    setCategorias(value);
   };
 
   const upload = async () => {
     const formData = new FormData();
 
+    formData.append('categorias', categorias);
     formData.append('file', file);
+    formData.append('imageFile', imageFile);
     formData.append('nombre', nombre);
 
     try {
@@ -71,6 +89,7 @@ export default function NewBook() {
     } catch (err) {
       console.error(err);
     }
+    
   };
 
   return (
@@ -84,24 +103,22 @@ export default function NewBook() {
           margin:'0 auto',
           position: 'relative'}}
         >
-          <div className='new-cover-upload' style={{
-            margin: 'auto',
-            width:'50%',
-            height:'86px',
-            margin:'auto',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
-            textAlign: 'center'
-          }}>
-            <Icon size='huge' name='image' style={{color: 'grey', cursor: 'pointer'}}>
-            </Icon>
-            <span style={{color: '#6f6f6f', cursor: 'pointer'}}>Agregar portada</span>
-          </div>
+          {image ? (
+            <div
+              style={{
+                backgroundImage: `url(${image})`,
+                width: '100%',
+                height: '300px',
+                backgroundSize: 'cover',
+              }}
+            />
+          ): (
+            <CoverUpload handleFileChange={handleFileChange}/>
+          )}   
+
         </div>
       </Grid.Column>
+
       <Grid.Column width={11} style={{marginLeft: '4rem'}}>
         <Header
           as='h2'
@@ -129,7 +146,12 @@ export default function NewBook() {
 
           <Form.Group inline>
             <label>Categorias</label>
-            <Dropdown placeholder='categorías' fluid multiple selection options={categorias} />
+            <Dropdown
+              fluid multiple selection
+              options={categoriass}
+              placeholder='categorías'
+              onChange={handleArrayChange}
+            />
           </Form.Group>
 
           <Form.Group inline>
