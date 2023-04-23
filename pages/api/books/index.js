@@ -33,6 +33,7 @@ export default async function handler(req, res) {
     case 'POST':
       const form = new formidable.IncomingForm();
       try {
+        
         const formData = await new Promise((resolve, reject) => {
           form.parse(req, (err, fields, files) => {
             if (err) {
@@ -43,16 +44,15 @@ export default async function handler(req, res) {
           });
         });
         
-        // Do something with formData.fields and formData.files
-        
         const fileURL = await uploadImage(formData.files.file, formData.fields.nombre);
         const imageURL = formData.files.imageFile ? 
           await uploadImage(formData.files.imageFile, `${formData.fields.nombre}-image`)
           : "" ;
 
         const newBook = new Book({
-          categorias: formData.fields.categorias,
-          nombre: formData.fields.nombre,
+          categorias: formData.fields.categorias || '',
+          nombre: formData.fields.nombre || '',
+          descripcion: formData.fields.descripcion || '',
           fileURL,
           imageURL
         });
@@ -61,6 +61,7 @@ export default async function handler(req, res) {
         res.status(201).json();
 
       } catch (error) {
+        console.log(error);
         return res.status(500).json(error)
       }
 

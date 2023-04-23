@@ -80,6 +80,7 @@ export default function NewBook() {
     formData.append('file', file);
     formData.append('imageFile', imageFile);
     formData.append('nombre', nombre);
+    formData.append('descripcion', descripcion);
 
     try {
       await fetch('http://localhost:3000/api/books', {
@@ -142,6 +143,7 @@ export default function NewBook() {
             control={TextArea}
             label='Descripción'
             placeholder='Descripción'
+            onChange={(e) => setDescripcion(e.target.value)} 
           />
 
           <Form.Group inline>
