@@ -8,7 +8,12 @@ const bookSchema = new Schema({
   },
   fileURL: {
     type: String,
-    required: [true, 'URL is required'],
+    required: [true, 'fileURL is required'],
+    trim: true
+  },
+  descripcion: {
+    type: String,
+    required: false,
     trim: true
   },
   imageURL: {
