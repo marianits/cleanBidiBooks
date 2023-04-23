@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import Axios from 'axios'
 import { Button, Form, Grid, Icon, Input } from 'semantic-ui-react';
-import { publish } from '../../lib/events';
+import { publish } from '../../../lib/events';
 
 export default function AuthorForm({ refetch, author, mode, id }) {
 
