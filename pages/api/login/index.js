@@ -8,7 +8,6 @@ export default async function loginHandler (req, res) {
   const { email, password } = req.body;
 
   const existeUsuario = await User.findOne({ email });
-
   if (!existeUsuario){
     return res.status(401).json({ error: 'The provided user doesn\'t exist' });
   }

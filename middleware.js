@@ -7,7 +7,7 @@ export async function middleware(req) {
   if (token === null) {
     return NextResponse.redirect(new URL('/api/auth/signin', req.url))
   }
-  if (token.role !== 'terror') {
+  if (token.role !== 'admin') {
     return NextResponse.redirect(new URL('/error', req.url))
   }
   return NextResponse.next();
