@@ -30,14 +30,16 @@ export default NextAuth({
   callbacks: {
     async jwt(params) {
       // update token
-      if (params.user?.nombre) {
-        params.token.role = params.user.nombre;
+      if (params.user?.role) {
+        params.token.role = params.user.role;
       }
       // return final_token
       return params.token;
     },
     async session({ session, token }) {
       // Send properties to the client
+      const { data } = await axios.post('http://localhost:3000/api/users/find', {selector: session.user.email});
+      session.user.userId = data._id;
       session.user.role = token.role;
       return session;
     }

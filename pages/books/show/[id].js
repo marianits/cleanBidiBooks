@@ -4,8 +4,15 @@ import {
   Header,
   Label
 } from 'semantic-ui-react';
+import { checkout } from 'lib/checkout';
+import { getSession } from 'next-auth/react'
 
-export default function BookInformation ( { book }){
+export default function BookInformation ({ book, userId }) {
+  const handlePayment = event => {
+    event.preventDefault()
+    checkout(book, userId)
+  };
+
   return(
     <Grid stackable columns={2}>
       <Grid.Column width={4}>
@@ -19,7 +26,13 @@ export default function BookInformation ( { book }){
           }}
         />
         <div className='bookActions' style={{margin: '1.6rem auto 2.4rem auto', display:'flex', flexDirection:'column'}}>
-          <Button style={{borderRadius: '3rem', width:'250px'}}>Comprar libro!</Button>
+          <Button
+            color='orange'
+            style={{borderRadius: '3rem', width:'250px'}}
+            onClick={handlePayment}
+          >
+            Comprar libro!
+          </Button>
         </div>
       </Grid.Column>
       <Grid.Column width={11}>
@@ -44,12 +57,12 @@ export default function BookInformation ( { book }){
           </Header>
           <div className='bookDetails'>
             <span 
-              style={{font: '400 1.2rem/1.4375 "Proxima Nova",Montserrat,Arial,sans-serif'}}
+              style={{font: '400 1.2rem/1.4375 "Proxima Nova",Montserrat,Arial,sans-serif', marginTop: '10px'}}
             >
               {book.descripcion}
             </span>
           </div>
-          <Label.Group>
+          <Label.Group style={{marginTop: '10px'}}>
             {book.categorias.map(c => {
               return(
                 <Label key={c}>
@@ -65,13 +78,14 @@ export default function BookInformation ( { book }){
 }
 
 export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
   const { query: { id } } = ctx;
   const res = await fetch(`http://localhost:3000/api/books/${id}`);
   const book = await res.json();
-  console.log(book);
   return {
     props: {
-      book
+      book,
+      userId: session.user.userId
     }
   }
 };

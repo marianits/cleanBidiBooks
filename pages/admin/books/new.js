@@ -32,17 +32,21 @@ const categoriass = [
 
 const autores = [
   {
-    key: 'Isabel Allende',
-    text: 'Isabel Allende',
-    value: 'Isabel Allende',
+    key: 'Bismark Cuellar',
+    text: 'Bismark Cuellar',
+    value: 'Bismark Cuellar',
   }, {
-    key: 'Haruki Murakami',
-    text: 'Haruki Murakami',
-    value: 'Haruki Murakami',
+    key: 'Gaby Vallejos',
+    text: 'Gaby Vallejos',
+    value: 'Gaby Vallejos',
   },{
     key: 'Laia Aguilar',
     text: 'Laia Aguilar',
     value: 'Laia Aguilar',
+  }, {
+    key: 'Ines Martin Rogrigo',
+    text: 'Ines Martin Rogrigo',
+    value: 'Ines Martin Rogrigo'
   }
 ]
 
@@ -53,6 +57,8 @@ export default function NewBook() {
   const [image, setImage] = useState('');
   const [imageFile, setImageFile] = useState('');
   const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [precio, setPrecio] = useState('');
 
   const handleFileChange = (e) => {
     const { name } = e.target;
@@ -165,6 +171,17 @@ export default function NewBook() {
               options={autores}
             />
           </Form.Group>
+
+          <Form.Field inline>
+            <label>Precio</label>
+            <input
+              placeholder='Ingrese el precio del libro'
+              id='precio'
+              name="precio"
+              onChange={(e) => setPrecio(e.target.value)} 
+            />
+            <label style={{marginLeft:'1rem'}}>Bs.</label>
+          </Form.Field>
 
           <Divider />
           
