@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { Button, Dropdown, Grid, Header, Table } from 'semantic-ui-react';
 import { ModalForm } from '../../../components/Modal';
 import NewAuthor from './authorForm'
-import ConfirmDelete from '../categorias/confirmDelete';
+import ConfirmDelete from '../generos/confirmDelete';
 
 export default function Authors() {
 

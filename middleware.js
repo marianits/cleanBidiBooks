@@ -16,6 +16,6 @@ export async function middleware(req) {
   //Para proteger más de una ruta se usa el matcher
   
   export const config = {
-    matcher: ['/admin/:path*', '/catalogo', '/', '/books/:path*']
+    matcher: ['/admin/:path*', '/',]
   }
  

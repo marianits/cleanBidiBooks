@@ -64,7 +64,7 @@ export default async function handler(req, res) {
         console.log(error);
         return res.status(500).json(error)
       }
-
+      break;
     default:
       return res.status(400).json({ msg: 'This method is not supported'})
   }

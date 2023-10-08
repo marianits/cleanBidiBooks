@@ -19,10 +19,10 @@ export default function Categories (){
     <>
       <Grid stackable columns={2}>
         <Grid.Column width={10}>
-          <Header as='h2'>Categorias</Header>
+          <Header as='h2'>Géneros</Header>
         </Grid.Column>
         <Grid.Column width={6} textAlign='right'>
-          <ModalForm header={'Nueva Categoría'} trigger={ <Button color='violet'>Nueva</Button> }>
+          <ModalForm header={'Nueva Categoría'} trigger={ <Button color='violet'>Nuevo</Button> }>
             <NewCategory refetch={refetch} />
           </ModalForm>
         </Grid.Column>

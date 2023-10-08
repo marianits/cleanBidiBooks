@@ -19,7 +19,9 @@ export default function Books() {
           <Header as='h2'>Libros</Header>
         </Grid.Column>
         <Grid.Column width={6} textAlign='right'>
-          <Button color='purple'>Nuevo</Button>
+          <Link href={`/admin/books/new`}>
+            <Button color='purple'>Nuevo</Button>
+          </Link>
         </Grid.Column>
       </Grid>
 
