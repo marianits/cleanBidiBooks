@@ -85,7 +85,7 @@ export const getServerSideProps = async (ctx) => {
   return {
     props: {
       book,
-      userId: session.user.userId
+      userId: session?.user?.userId || '123'
     }
   }
 };

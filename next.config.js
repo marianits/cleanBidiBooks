@@ -8,6 +8,11 @@ module.exports = {
         hostname: 'static.wattpad.com',
         port: ''
       },
+      {
+        protocol: 'https',
+        hostname: 'assets-global.website-files.com',
+        port: ''
+      },
     ],
   },
   reactStrictMode: false,
