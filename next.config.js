@@ -13,6 +13,11 @@ module.exports = {
         hostname: 'assets-global.website-files.com',
         port: ''
       },
+      {
+        protocol: 'https',
+        hostname: 'static.cegal.es',
+        port: ''
+      }
     ],
   },
   reactStrictMode: false,
