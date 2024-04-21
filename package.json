@@ -13,6 +13,7 @@
     "axios": "^1.2.2",
     "backblaze-b2": "1.7.0",
     "canvas-confetti": "^1.6.0",
+    "epubjs": "^0.3.93",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
     "formidable": "^1.2.2",
