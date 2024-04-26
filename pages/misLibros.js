@@ -1,8 +1,6 @@
 import { Button, Header, Segment } from 'semantic-ui-react';
-import Link from 'next/link';
 
 export default function MisLibros() {
-
   return (
     <>
       <Segment textAlign='center' basic>
@@ -20,7 +18,6 @@ export default function MisLibros() {
               0 LIBROS
             </Header>
             <Button content='+ Agregar libro a mi libreria' secondary />
-
           </div>
           <div>
           </div>
