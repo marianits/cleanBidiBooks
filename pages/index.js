@@ -14,18 +14,7 @@ export default function HomePage() {
 
   return (
     <>
-    <h3>Admin Dashboard</h3>
-
-    <Link href={`/admin/generos`}>
-      <Button color='purple'>Géneros</Button>
-    </Link>
-    <Link href={`/admin/autores`}>
-      <Button color='purple'>Autores</Button>
-    </Link>
-    <Link href={`/admin/books`}>
-      <Button color='purple'>Libros</Button>
-    </Link>
+      <h3>Bienvenido admin!</h3>
     </>
-
   )
 }
