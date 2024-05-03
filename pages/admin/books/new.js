@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from "next/router";
 import CoverUpload from 'components/CoverUpload';
 import { 
   Button,
@@ -52,6 +53,8 @@ const autores = [
 
 export default function NewBook() {
 
+  const router = useRouter();
+
   const [categorias, setCategorias] = useState([]);
   const [file, setFile] = useState();
   const [image, setImage] = useState('');
@@ -59,6 +62,7 @@ export default function NewBook() {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (e) => {
     const { name } = e.target;
@@ -89,10 +93,14 @@ export default function NewBook() {
     formData.append('descripcion', descripcion);
 
     try {
+      setLoading(true);
       await fetch('http://localhost:3000/api/books', {
         method: 'POST',
         body: formData
       });
+      setLoading(false);
+      await router.push({ pathname: '/admin/books' });
+
     } catch (err) {
       console.error(err);
     }
@@ -132,7 +140,7 @@ export default function NewBook() {
           content='Detalles del libro'
         />
         <Divider />
-        <Form size='large' style={{padding: '0 20px'}}>
+        <Form size='large' style={{padding: '0 20px'}} loading={loading}>
 
           <Form.Field>
             <label>Nombre del libro</label>
