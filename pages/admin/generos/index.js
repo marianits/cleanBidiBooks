@@ -22,7 +22,7 @@ export default function Categories (){
           <Header as='h2'>Géneros</Header>
         </Grid.Column>
         <Grid.Column width={6} textAlign='right'>
-          <ModalForm header={'Nueva Categoría'} trigger={ <Button color='violet'>Nuevo</Button> }>
+          <ModalForm header={'Nuevo Género'} trigger={ <Button color='violet'>Nuevo</Button> }>
             <NewCategory refetch={refetch} />
           </ModalForm>
         </Grid.Column>

@@ -1,7 +1,5 @@
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
-import { Button } from 'semantic-ui-react'
-import Link from 'next/link';
 
 export default function HomePage() {
 

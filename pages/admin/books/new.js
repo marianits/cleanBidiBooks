@@ -153,11 +153,11 @@ export default function NewBook() {
           />
 
           <Form.Group inline>
-            <label>Categorias</label>
+            <label>Géneros</label>
             <Dropdown
               fluid multiple selection
               options={categoriass}
-              placeholder='categorías'
+              placeholder='géneros'
               onChange={handleArrayChange}
             />
           </Form.Group>

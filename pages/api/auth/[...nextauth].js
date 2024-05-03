@@ -11,10 +11,11 @@ export default NextAuth({
   },
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "Email",
+      label: "Iniciar sesión",
       credentials: {
         email: { label: "Email", type: "text", placeholder: "Ingrese su email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password", placeholder: "Ingrese su password" }
       },
       async authorize(credentials, req) {
         let user = { email: credentials.email, password: credentials.password };
