@@ -51,6 +51,7 @@ export default async function handler(req, res) {
 
         const newBook = new Book({
           categorias: formData.fields.categorias || '',
+          autores: JSON.parse(formData.fields.autores) || '',
           nombre: formData.fields.nombre || '',
           descripcion: formData.fields.descripcion || '',
           fileURL,

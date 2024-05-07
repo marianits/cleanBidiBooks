@@ -31,30 +31,11 @@ const categoriass = [
   }
 ]
 
-const autores = [
-  {
-    key: 'Bismark Cuellar',
-    text: 'Bismark Cuellar',
-    value: 'Bismark Cuellar',
-  }, {
-    key: 'Gaby Vallejos',
-    text: 'Gaby Vallejos',
-    value: 'Gaby Vallejos',
-  },{
-    key: 'Laia Aguilar',
-    text: 'Laia Aguilar',
-    value: 'Laia Aguilar',
-  }, {
-    key: 'Ines Martin Rogrigo',
-    text: 'Ines Martin Rogrigo',
-    value: 'Ines Martin Rogrigo'
-  }
-]
-
-export default function NewBook() {
+export default function NewBook({ autores }) {
 
   const router = useRouter();
 
+  const [authors, setAutores] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [file, setFile] = useState();
   const [image, setImage] = useState('');
@@ -83,9 +64,13 @@ export default function NewBook() {
     setCategorias(value);
   };
 
+  const handleAuthorsChange = (e, { value }) => {
+    setAutores(value)
+  };
+
   const upload = async () => {
     const formData = new FormData();
-
+    formData.append('autores', JSON.stringify(authors));
     formData.append('categorias', categorias);
     formData.append('file', file);
     formData.append('imageFile', imageFile);
@@ -171,12 +156,12 @@ export default function NewBook() {
           </Form.Group>
 
           <Form.Group inline>
-            <label>Autor</label>
+            <label>Autores</label>
             <Dropdown
               placeholder='Seleccione un autor'
-              fluid
-              selection
+              fluid multiple selection
               options={autores}
+              onChange={handleAuthorsChange}
             />
           </Form.Group>
 
@@ -218,3 +203,24 @@ export default function NewBook() {
     </Grid>
   );
 }
+
+
+export const getServerSideProps = async (ctx) => {
+  const res = await fetch('http://localhost:3000/api/authors');
+  const response = await res.json();
+  const autores = response.map(autor => {
+    return {
+      text: `${autor.apellidos}, ${autor.nombre}`,
+      key: autor._id,
+      value: {
+        id: autor._id,
+        name: `${autor.nombre} ${autor.apellidos}`
+      }      
+    }
+  });
+  return {
+    props: {
+      autores
+    }
+  }
+};

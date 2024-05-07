@@ -24,7 +24,11 @@ const bookSchema = new Schema({
   categorias: {
     type: Array,
     default: []
-  }
+  },
+  autores: [{
+    id: { type: Schema.Types.ObjectId, ref: 'Author' },
+    name: String
+  }]
 }, {
   timestamps: true,
   versionKey: false
