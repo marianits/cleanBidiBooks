@@ -6,6 +6,9 @@ import {
 } from 'semantic-ui-react';
 import { checkout } from 'lib/checkout';
 import { getSession } from 'next-auth/react'
+import InfoImage from 'components/InfoImage';
+import InfoHeader from 'components/InfoHeader';
+import Link from 'next/link';
 
 export default function BookInformation ({ book, userId }) {
   const handlePayment = event => {
@@ -16,15 +19,7 @@ export default function BookInformation ({ book, userId }) {
   return(
     <Grid stackable columns={2}>
       <Grid.Column width={4}>
-        <div
-          style={{
-            borderRadius: '0 6% 6% 0/4%',
-            backgroundImage: `url(${book.imageURL})`,
-            width: '250px',
-            height: '400px',
-            backgroundSize: 'cover',
-          }}
-        />
+        <InfoImage imageURL={book.imageURL}/>
         <div className='bookActions' style={{margin: '1.6rem auto 2.4rem auto', display:'flex', flexDirection:'column'}}>
           <Button
             color='orange'
@@ -36,25 +31,24 @@ export default function BookInformation ({ book, userId }) {
         </div>
       </Grid.Column>
       <Grid.Column width={11}>
-        <div className='bookTitleSection'>
-          <Header 
-            as='h1'
-            style={{ fontFamily: 'Copernicus,"Libre Baskerville",Georgia,serif', fontSize: '3.2rem' }}
-          >
-            {book.nombre}
-          </Header>
-        </div>
+        <InfoHeader header={book.nombre} />
         <div className='bookMetaDataSection'>
-          <Header
-            as='h3'
-            style={{ 
-              fontFamily: 'Copernicus,"Libre Baskerville",Georgia,serif',
-              fontWeight: '400',
-              margin: '1.2rem 0'
-            }}
-          >
-            {book.bookAuthor}
-          </Header>
+          {book.autores.map(autor => {
+            return(
+              <Link key={autor._id} href={`/authors/${autor.id}`}>
+                <Header
+                  as='h3'
+                  style={{ 
+                    fontFamily: 'Copernicus,"Libre Baskerville",Georgia,serif',
+                    fontWeight: '400',
+                    margin: '1.2rem 0'
+                  }}
+                >
+                  {autor.name}
+                </Header>
+              </Link>
+            )})}
+        
           <div className='bookDetails'>
             <span 
               style={{font: '400 1.2rem/1.4375 "Proxima Nova",Montserrat,Arial,sans-serif', marginTop: '10px'}}
