@@ -28,7 +28,12 @@ const bookSchema = new Schema({
   autores: [{
     id: { type: Schema.Types.ObjectId, ref: 'Author' },
     name: String
-  }]
+  }],
+  stripeId: {
+    type: String,
+    required: false,
+    trim: true
+  }
 }, {
   timestamps: true,
   versionKey: false

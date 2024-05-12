@@ -3,6 +3,7 @@ import Book from 'models/Book'
 import formidable from "formidable"
 import fs from "fs";
 import uploadHandler from 'utils/backblaze';
+import Stripe from 'stripe';
 
 dbConnect()
 
@@ -32,6 +33,8 @@ export default async function handler(req, res) {
       break;
     case 'POST':
       const form = new formidable.IncomingForm();
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
       try {
         
         const formData = await new Promise((resolve, reject) => {
@@ -44,10 +47,25 @@ export default async function handler(req, res) {
           });
         });
         
-        const fileURL = await uploadImage(formData.files.file, formData.fields.nombre);
+        const fileURL = await uploadImage(formData.files.file, formData.fields.nombre.replace(/\s/g, ""));
         const imageURL = formData.files.imageFile ? 
-          await uploadImage(formData.files.imageFile, `${formData.fields.nombre}-image`)
+          await uploadImage(formData.files.imageFile, `${formData.fields.nombre.replace(/\s/g, "")}-image`)
           : "" ;
+
+        // Upload product to Stripe
+        const product = await stripe.products.create({
+          name: formData.fields.nombre,
+          description: formData.fields.descripcion,
+          'images[]': imageURL,
+          default_price_data: {
+            currency: 'bob',
+            "unit_amount": 7599,
+          }
+        });
+
+        stripe.products.update(product.id,{
+          default_price: "price_1NANzYHoA8lo3mEunBy8TpDv"
+        })
 
         const newBook = new Book({
           categorias: formData.fields.categorias || '',
@@ -55,7 +73,8 @@ export default async function handler(req, res) {
           nombre: formData.fields.nombre || '',
           descripcion: formData.fields.descripcion || '',
           fileURL,
-          imageURL
+          imageURL,
+          stripeId: product.id
         });
 
         await newBook.save();
