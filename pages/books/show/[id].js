@@ -5,7 +5,7 @@ import {
   Label
 } from 'semantic-ui-react';
 import { checkout } from 'lib/checkout';
-import { getSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react';
 import InfoImage from 'components/InfoImage';
 import InfoHeader from 'components/InfoHeader';
 import Link from 'next/link';

@@ -1,7 +1,14 @@
 import { Button, Header, Image } from 'semantic-ui-react';
+import { useRouter } from "next/router";
 
-export default function BookRow({ buttonOne, buttonTwo, description, number, srcImage, avance, precio }){
-  console.log('INSTANCIATED');
+export default function BookRow({ buttonOne, buttonTwo, number, srcImage, avance, precio, title = 'Un animal Salvaje', description, author, bookId }){
+  const router = useRouter();
+  
+  const goBook = async event => {
+    event.preventDefault()
+    await router.push({ pathname: `/books/show/${bookId}` });
+  };
+
   return(
     <li style={{marginBottom: '30px', paddingBottom: '30px', display: 'flex', flexWrap: 'wrap', marginRight: '-15px',marginLeft: '-15px'}}>
       <div className='book-content' style={{flex: '0 0 75%', maxWidth: '75%'}}>
@@ -32,10 +39,10 @@ export default function BookRow({ buttonOne, buttonTwo, description, number, src
             </span>
           </div>
           <div className='bookDetails' style={{width: '85%', paddingLeft: '15px', paddingRight: '32px'}}>
-          <Header as='h2' className='title' style={{fontSize: '22px', fontWeight: '400', lineHeight: '1.2', color: '#ee6314'}}>Un animal Salvaje</Header>
-          <Header as='h3' className='author' style={{fontWeight: '400', fontSize: '13px'}}>Zambrana, Carlos</Header>
+          <Header as='h2' className='title' style={{fontSize: '22px', fontWeight: '400', lineHeight: '1.2', color: '#ee6314'}}>{title}</Header>
+          <Header as='h3' className='author' style={{fontWeight: '400', fontSize: '13px'}}>{author}</Header>
           <p className='description' style={{fontSize: '14px', lineHeight: '24px', lineHeight: '150%', fontWeight: '400'}}>
-            VEINTIDÓS MILLONES DE LECTORES LO ESTÁN ESPERANDO. Vuelve la «voz napoleónica, que no escribe, boxea» (El Cultural), Premio Goncourt des Lycéens, Gran Premio de Novela de la Academia Francesa, Premio Lire, Premio Qué Leer, Premio San Clemente y Premio Internacional Alicante Noir.N.º 1 en la lista d...
+              {description}
           </p>
           </div>
         </div>
@@ -46,7 +53,11 @@ export default function BookRow({ buttonOne, buttonTwo, description, number, src
           <div className='bookProgress' style={{color: '#3c4858'}}>
             <strong>{avance ? avance : precio}</strong>{avance ? ' de Avance' : ' $Bs'}
           </div>
-          <Button className='continueReadingBtn' style={{background: '#EE6314', color: '#fff'}}>
+          <Button 
+            className='continueReadingBtn'
+            style={{background: '#EE6314', color: '#fff'}}
+            onClick={goBook}
+          >
             {buttonOne}
           </Button>
           <Button className='startAgainBtn' style={{border: '1px solid #EE6314', color: '#ee6314', background: 'F4F4F4', marginTop: '7.5px'}}>

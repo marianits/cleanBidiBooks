@@ -11,7 +11,10 @@ export function Navbar(props) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [activeItem, setActiveItem] = useState('explore');
   const [searchSelector, setSearchSelector] = useState('');
-  const handleItemClick = (name) => setActiveItem(name);
+  const handleItemClick = async name => {
+    setActiveItem(name);
+    await router.push({ pathname: `/${name}` });
+  };
   const handleSearchClick = async () => {
     await router.push({
       pathname: '/busquedas',
@@ -43,8 +46,8 @@ export function Navbar(props) {
         />
         <Menu.Item
           name='MIS LIBROS'
-          active={activeItem === 'myBooks'}
-          onClick={() => handleItemClick('myBooks')}
+          active={activeItem === 'miLibreria'}
+          onClick={() => handleItemClick('miLibreria')}
           style={{fontFamily: 'Open Sans,sans-serif', color: '#FFFFFF !important'}}
         />
         <Menu.Item position='right'>

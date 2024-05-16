@@ -13,10 +13,14 @@ export default function Busquedas({ books }) {
                 <BookRow
                   key={book._id}
                   srcImage={book.imageURL}
+                  title={book.nombre}
                   number={index+1}
+                  description={book.descripcion}
+                  author={'Iturgaiz, Ana'}
                   buttonOne='Comprar'
                   buttonTwo='Ver mas del libro'
-                  precio='99'
+                  precio='75.99'
+                  bookId={book._id}
                 />
               )
             })

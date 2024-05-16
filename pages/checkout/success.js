@@ -18,7 +18,7 @@ export default function Success () {
         Muchas Gracias por tu compra!
       </Header>
       <p>Aqui tienes el enlace al libro:</p>
-      <Link href={`/admin/books/${bookId}`}>
+      <Link href={`/books/${bookId}`}>
         enlace
       </Link>
     </Segment>
