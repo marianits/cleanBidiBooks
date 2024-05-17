@@ -14,7 +14,12 @@ const compraSchema = new Schema({
   fechaCompra: {
     type: Date,
     default: Date.now
-  }
+  },
+  location: {
+    type: String,
+    default: null
+  },
+  notas: [String]
 }, {
   timestamps: true,
   versionKey: false

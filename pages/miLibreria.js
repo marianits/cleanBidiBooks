@@ -18,6 +18,7 @@ export default function MiLibreria({ books }) {
                 <BookRow
                   srcImage={book.imageURL}
                   title={book.nombre}
+                  description={book.descripcion}
                   number='1'
                   buttonOne='Continuar Leyendo'
                   buttonTwo='Volver a Empezar'

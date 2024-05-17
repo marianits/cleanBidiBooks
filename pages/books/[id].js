@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import { ReactReader } from "react-reader";
+import { getSession } from 'next-auth/react';
 
-export default function Book({ book: { fileURL } }){
-  const [location, setLocation] = useState(null);
+export default function Book({ book: { fileURL }, compra }){
+  const [location, setLocation] = useState(compra?.location);
   const [largeText, setLargeText] = useState(false);
   const [rendition, setRendition] = useState(undefined)
   const [selections, setSelections] = useState([]);
@@ -45,8 +46,14 @@ export default function Book({ book: { fileURL } }){
 
   const locationChanged = (epubcifi) => {
     // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
-    setLocation(epubcifi)
-    console.log(epubcifi);
+    setLocation(epubcifi);
+    fetch(`http://localhost:3000/api/compras/${compra._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ location: epubcifi }),
+      })
   }
 
   return (
@@ -77,12 +84,25 @@ export default function Book({ book: { fileURL } }){
 }
 
 export const getServerSideProps = async (ctx) => {
-  const { id } = ctx.query 
+  const { id } = ctx.query;
+  const session = await getSession(ctx);
   const res = await fetch(`http://localhost:3000/api/books/${id}`);
   const book = await res.json();
+  const com = await fetch('http://localhost:3000/api/compras/getByBookUser', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: session?.user?.userId || '123',
+      bookId: book._id
+    })
+  });
+  const compra = await com.json();
   return {
     props: {
-      book
+      book,
+      compra
     }
   }
 };
