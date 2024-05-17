@@ -1,10 +1,17 @@
 import { Segment } from 'semantic-ui-react';
 import { getSession } from 'next-auth/react';
+import { useRouter } from "next/router";
 import BookRow from 'components/BookRow';
 import CentralHeader from 'components/CentralHeader';
 import NoBooks from 'components/noBooks';
 
 export default function MiLibreria({ books }) {
+  const router = useRouter();
+
+  const goToBook = async (bookId) => {
+    await router.push({ pathname: `/books/${bookId}` });
+  };
+
   return (
     <>
       {books.length > 0 ? (
@@ -19,8 +26,10 @@ export default function MiLibreria({ books }) {
                   srcImage={book.imageURL}
                   title={book.nombre}
                   description={book.descripcion}
+                  bookId={book._id}
                   number='1'
                   buttonOne='Continuar Leyendo'
+                  buttonOneF={goToBook}
                   buttonTwo='Volver a Empezar'
                   avance='73%'
                 />

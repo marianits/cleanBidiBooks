@@ -1,14 +1,6 @@
 import { Button, Header, Image } from 'semantic-ui-react';
-import { useRouter } from "next/router";
 
-export default function BookRow({ buttonOne, buttonTwo, number, srcImage, avance, precio, title = 'Un animal Salvaje', description, author, bookId }){
-  const router = useRouter();
-  
-  const goBook = async event => {
-    event.preventDefault()
-    await router.push({ pathname: `/books/show/${bookId}` });
-  };
-
+export default function BookRow({ buttonOne, buttonTwo, number, srcImage, avance, precio, title = 'Un animal Salvaje', description, author, bookId, buttonOneF }){
   return(
     <li style={{marginBottom: '30px', paddingBottom: '30px', display: 'flex', flexWrap: 'wrap', marginRight: '-15px',marginLeft: '-15px'}}>
       <div className='book-content' style={{flex: '0 0 75%', maxWidth: '75%'}}>
@@ -56,11 +48,15 @@ export default function BookRow({ buttonOne, buttonTwo, number, srcImage, avance
           <Button 
             className='continueReadingBtn'
             style={{background: '#EE6314', color: '#fff'}}
-            onClick={goBook}
+            onClick={() => buttonOneF(bookId)}
           >
             {buttonOne}
           </Button>
-          <Button className='startAgainBtn' style={{border: '1px solid #EE6314', color: '#ee6314', background: 'F4F4F4', marginTop: '7.5px'}}>
+          <Button
+            className='startAgainBtn'
+            style={{border: '1px solid #EE6314', color: '#ee6314', background: 'F4F4F4', marginTop: '7.5px'}}
+            onClick={() => buttonOneF(bookId)}
+          >
             {buttonTwo}
           </Button>
         </div>

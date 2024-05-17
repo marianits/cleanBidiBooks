@@ -1,7 +1,14 @@
 import BookRow from "components/BookRow";
 import CentralHeader from 'components/CentralHeader';
+import { useRouter } from "next/router";
 
 export default function Busquedas({ books }) {
+  const router = useRouter();
+
+  const goBook = async (bookId) => {
+    await router.push({ pathname: `/books/show/${bookId}` });
+  };
+  
   return (
     <>
       <CentralHeader header={`${books.length} títulos encontrados`}/>
@@ -18,6 +25,7 @@ export default function Busquedas({ books }) {
                   description={book.descripcion}
                   author={'Iturgaiz, Ana'}
                   buttonOne='Comprar'
+                  buttonOneF={goBook}
                   buttonTwo='Ver mas del libro'
                   precio='75.99'
                   bookId={book._id}
@@ -35,7 +43,6 @@ export const getServerSideProps = async (ctx) => {
   const { query: { selector }} = ctx;
   const res = await fetch(`http://localhost:3000/api/books/searchBooks?selector=${selector}`);
   const books = await res.json();
-  console.log(books);
   return {
     props: {
       books
