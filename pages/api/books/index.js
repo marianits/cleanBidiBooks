@@ -53,7 +53,7 @@ export default async function handler(req, res) {
           : "" ;
 
         // Upload product to Stripe
-        const product = await stripe.products.create({
+        const { default_price } = await stripe.products.create({
           name: formData.fields.nombre,
           description: formData.fields.descripcion,
           'images[]': imageURL,
@@ -63,10 +63,6 @@ export default async function handler(req, res) {
           }
         });
 
-        stripe.products.update(product.id,{
-          default_price: "price_1NANzYHoA8lo3mEunBy8TpDv"
-        })
-
         const newBook = new Book({
           categorias: formData.fields.categorias || '',
           autores: JSON.parse(formData.fields.autores) || '',
@@ -74,7 +70,7 @@ export default async function handler(req, res) {
           descripcion: formData.fields.descripcion || '',
           fileURL,
           imageURL,
-          stripeId: product.id
+          stripeId: default_price
         });
 
         await newBook.save();
